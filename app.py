@@ -10,6 +10,7 @@ oracle_db_metadata = schema.MetaData(schema='PANAGIOTIS')
 
 db = SQLAlchemy(app, metadata=oracle_db_metadata)
 
+
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(200), nullable=False)
@@ -17,6 +18,7 @@ class Todo(db.Model):
 
     def __repr__(self):
         return "<Task %r>" % self.id
+
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -35,6 +37,7 @@ def index():
         tasks = Todo.query.order_by(Todo.date_created).all()
         return render_template("index.html", tasks=tasks)
 
+
 @app.route("/delete/<int:id>")
 def delete(id):
     task_to_delete = Todo.query.get_or_404(id)
@@ -45,6 +48,24 @@ def delete(id):
         return redirect("/")
     except:
         return "There was an issue with delete task!"
+
+
+@app.route("/update/<int:id>", methods=["GET", "POST"])
+def update(id):
+    task_to_update = Todo.query.get_or_404(id)
+
+    if request.method == "POST":
+        task_to_update.content = request.form["content"]
+
+        try:
+            db.session.commit()
+            return redirect("/")
+        except:
+            return "There was an issue with update task!"
+
+    else:
+        return render_template("update.html", task=task_to_update)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
