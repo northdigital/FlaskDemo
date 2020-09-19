@@ -2,7 +2,8 @@
 /shelf/
 /workspace.xml
 # Datasource local storage ignored files
-/../../../../../../../../:\Users\panagiotis\Documents\projects\Python\FlaskDemo\.idea/dataSources/
 /dataSources.local.xml
 # Editor-based HTTP Client requests
 /httpRequests/
+/dataSources/*
+/venv/*
