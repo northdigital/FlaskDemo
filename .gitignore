@@ -1,1 +1,4 @@
-/venv/*
+/venv/Lib/
+/venv/Scripts/
+/venv/cx_Oracle-doc/
+/.idea/
